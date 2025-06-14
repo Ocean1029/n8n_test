@@ -1,0 +1,24 @@
+name: Notify n8n deployment
+
+on:
+  workflow_dispatch:  # ✅ 手動觸發
+  pull_request:       # ✅ PR 到 main 時觸發
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Notify n8n of deployment result
+        if: always()
+        run: |
+          curl -X POST ${{ secrets.N8N_WEBHOOK_URL }} \
+            -H 'Content-Type: application/json' \
+            -d '{
+              "status": "${{ job.status }}",
+              "env": "dev",
+              "sha": "${{ github.sha }}",
+              "pr": "${{ github.event.pull_request.number || 0 }}"
+            }'
