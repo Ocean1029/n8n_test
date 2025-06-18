@@ -14,7 +14,7 @@ jobs:
       - name: Notify n8n of deployment result
         if: always()
         run: |
-          curl -X POST https://f08d-103-5-140-158.ngrok-free.app/webhook/ci-deploy \
+          curl -X POST https://beba-153-229-106-45.ngrok-free.app/webhook/ci-deploy \
             -H 'Content-Type: application/json' \
             -d '{
               "status": "${{ job.status }}",
